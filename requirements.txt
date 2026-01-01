@@ -1,0 +1,6 @@
+transformers
+langchain
+langchain-huggingface 
+streamlit
+pymongo
+plotly
