@@ -7,7 +7,7 @@ import plotly.express as px
 
 
 #MongoDB access
-
+db_access = st.secrets.mongo_db_key.conn_str
 
 
 # -------------------------------
