@@ -1,6 +1,7 @@
-transformers
 langchain
 langchain-huggingface 
 streamlit
 pymongo
 plotly
+torch
+transformers
