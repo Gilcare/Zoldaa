@@ -23,6 +23,52 @@ db = client["Sierra-Nevada"]
 signups = db["SignUps"]
 period_symptoms = db["PeriodSymptoms"]
 
+
+@st.cache_resource
+def load_pipeline():
+    # Adding torch_dtype="auto" or "float16" speeds up GPU inference
+    return pipeline("text-generation", model="Qwen/Qwen2.5-0.5B-Instruct", dtype=torch.float16)
+pipe = load_pipeline()
+
+# Function to create chatbot
+def chatbot():
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+
+    with st.empty():
+        for message in st.session_state.messages:
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
+            
+    # ... (History initialization and display chats) ...
+    if user_input := st.chat_input("How can I help you?"):
+        st.session_state.messages.append({"role": "user", "content": user_input})
+    with st.chat_message("user"):
+        st.markdown(user_input)
+    with st.chat_message("assistant"):
+        # Setup for streaming
+        streamer = TextIteratorStreamer(pipe.tokenizer, skip_prompt=True, skip_special_tokens=True)
+        
+        # Prepare arguments
+        messages = st.session_state.messages # Use full history for context
+        generation_kwargs = dict(
+            text_inputs=messages, 
+            streamer=streamer,
+            max_new_tokens=512,
+            do_sample=True,
+            temperature=0.7,
+            top_p=0.9
+        )
+        # Run generation in a background thread to prevent UI blocking
+        thread = Thread(target=pipe, kwargs=generation_kwargs)
+        thread.start()
+
+        # Display the stream
+        full_response = st.write_stream(streamer)
+    st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+
+
 # -------------------------------
 # SESSION STATE INIT
 # -------------------------------
@@ -295,50 +341,6 @@ def symptoms_insights():
             st.warning("No logs found for the selected date range.")
     else:
         st.warning("No logs available for this user.")
-
-                 
-# Function to create chatbot
-def chatbot():
-    @st.cache_resource
-    def load_pipeline():
-        # Adding torch_dtype="auto" or "float16" speeds up GPU inference
-        return pipeline("text-generation", model="Qwen/Qwen2.5-0.5B-Instruct", dtype=torch.float16)
-    pipe = load_pipeline()
-    
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
-
-    with st.empty():
-        for message in st.session_state.messages:
-            with st.chat_message(message["role"]):
-                st.markdown(message["content"])
-            
-    # ... (History initialization and display chats) ...
-    if user_input := st.chat_input("How can I help you?"):
-        st.session_state.messages.append({"role": "user", "content": user_input})
-    with st.chat_message("user"):
-        st.markdown(user_input)
-    with st.chat_message("assistant"):
-        # Setup for streaming
-        streamer = TextIteratorStreamer(pipe.tokenizer, skip_prompt=True, skip_special_tokens=True)
-        
-        # Prepare arguments
-        messages = st.session_state.messages # Use full history for context
-        generation_kwargs = dict(
-            text_inputs=messages, 
-            streamer=streamer,
-            max_new_tokens=512,
-            do_sample=True,
-            temperature=0.7,
-            top_p=0.9
-        )
-        # Run generation in a background thread to prevent UI blocking
-        thread = Thread(target=pipe, kwargs=generation_kwargs)
-        thread.start()
-
-        # Display the stream
-        full_response = st.write_stream(streamer)
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
 
 
     
