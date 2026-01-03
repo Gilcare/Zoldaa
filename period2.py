@@ -283,7 +283,7 @@ def symptoms_insights():
 
             # Check if there is data to plot
             if not df.empty:
-                st.subheader(f"Symptom Ratingsbnm  {date_range}")
+                st.subheader(f"Symptom Ratings {date_range}")
                 
                 # Aggregate symptoms by date
                 symptoms_trends = df.groupby(['Symptom', 'Date']).agg({'Severity': 'mean'}).reset_index()
