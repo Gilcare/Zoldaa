@@ -334,7 +334,7 @@ def landing_page():
 
         # ... (History initialization and display code) ...
 
-        if user_input := st.chat_input("How can I help you?"):
+        if user_input := st.chat_input("✨ Ask Kyma"):
             st.session_state.messages.append({"role": "user", "content": user_input})
             with st.chat_message("user"):
                 st.markdown(user_input)
