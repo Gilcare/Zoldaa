@@ -30,42 +30,6 @@ def load_pipeline():
     return pipeline("text-generation", model="Qwen/Qwen2.5-0.5B-Instruct", dtype=torch.float16)
 pipe = load_pipeline()
 
-# Function to create chatbot
-def chatbot():
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
-
-    with st.empty():
-        for message in st.session_state.messages:
-            with st.chat_message(message["role"]):
-                st.markdown(message["content"])
-            
-    # ... (History initialization and display chats) ...
-    if user_input := st.chat_input("How can I help you?"):
-        st.session_state.messages.append({"role": "user", "content": user_input})
-    with st.chat_message("user"):
-        st.markdown(user_input)
-    with st.chat_message("assistant"):
-        # Setup for streaming
-        streamer = TextIteratorStreamer(pipe.tokenizer, skip_prompt=True, skip_special_tokens=True)
-        
-        # Prepare arguments
-        messages = st.session_state.messages # Use full history for context
-        generation_kwargs = dict(
-            text_inputs=messages, 
-            streamer=streamer,
-            max_new_tokens=512,
-            do_sample=True,
-            temperature=0.7,
-            top_p=0.9
-        )
-        # Run generation in a background thread to prevent UI blocking
-        thread = Thread(target=pipe, kwargs=generation_kwargs)
-        thread.start()
-
-        # Display the stream
-        full_response = st.write_stream(streamer)
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
 
 
 
@@ -349,19 +313,57 @@ def symptoms_insights():
 # -------------------------------
 def landing_page():
     st.markdown('<h1 style="color:#FF46A2; text-align: center;">PeriodIQ✨</h1>', unsafe_allow_html=True)
-    #st.divider()  
-    tab1, tab2, tab3, tabs4 = st.tabs(["📝 Today", "📊 Metrics", "🧠 Insights","✨Ask Kyma"])
+    st.divider()  
+    app = st.sidebar.selectbox("Menu",["📝 Journals","🧭 Metrics", "🧠Insights","✨ Ask Kyma"])
 
-    with tab1:
-        with st.expander("**How are you feeling today?**", expanded=False):
-            today_tab()
-    with tab2:
+    if app == "📝 Journals":
+        today_tab()
+    elif app == "🧭 Metrics":
         metrics_tab()
-    with tab3:
+    elif app == "🧠Insights":
         symptoms_insights()
         insights_tab()
-    with tabs4:
-        chatbot()
+    elif app == "✨ Ask Kyma":
+        if "messages" not in st.session_state:
+            st.session_state.messages = []
+
+        for message in st.session_state.messages:
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
+
+
+        # ... (History initialization and display code) ...
+
+        if user_input := st.chat_input("How can I help you?"):
+            st.session_state.messages.append({"role": "user", "content": user_input})
+            with st.chat_message("user"):
+                st.markdown(user_input)
+
+            with st.chat_message("assistant"):
+                # Setup for streaming
+                streamer = TextIteratorStreamer(pipe.tokenizer, skip_prompt=True, skip_special_tokens=True)
+        
+                # Prepare arguments
+                messages = st.session_state.messages # Use full history for context
+                generation_kwargs = dict(
+                    text_inputs=messages, 
+                    streamer=streamer,
+                    max_new_tokens=512,
+                    do_sample=True,
+                    temperature=0.7,
+                    top_p=0.9
+                )
+
+                # Run generation in a background thread to prevent UI blocking
+                thread = Thread(target=pipe, kwargs=generation_kwargs)
+                thread.start()
+
+                # Display the stream
+                full_response = st.write_stream(streamer)
+
+            st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+        
 
 
 def main():
