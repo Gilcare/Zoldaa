@@ -1,6 +1,8 @@
+huggingface_hub
 langchain
 langchain-huggingface 
 streamlit
+parlant
 pymongo
 plotly
 torch
