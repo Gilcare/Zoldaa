@@ -312,7 +312,31 @@ def symptoms_insights():
 # MAIN APP
 # -------------------------------
 def landing_page():
-    st.markdown('<h1 style="color:#FF46A2; text-align: center;">PeriodIQ✨</h1>', unsafe_allow_html=True)
+    st.markdown(
+          """
+          <h1 style="
+          color: #007D8C; 
+          text-align: center; 
+          font-family: 'Helvetica Neue', sans-serif; 
+          letter-spacing: 1px;
+          font-weight: 700;
+          margin-bottom: 0px;
+          ">
+           ZOLDAA
+          </h1>
+          <p style="
+          text-align: center; 
+          color: #555555; 
+          font-size: 14px; 
+          margin-top: -10px;
+          margin-bottom: 25px;
+          ">
+          Stand Tall & Thrive ✨
+         </p>
+         """, 
+         unsafe_allow_html=True
+     )
+
     st.divider()  
     app = st.sidebar.selectbox("Menu",["📝 Journals","🧭 Metrics", "🧠Insights","✨ Ask Kyma"])
 
