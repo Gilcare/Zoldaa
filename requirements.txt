@@ -2,10 +2,10 @@ einops
 huggingface_hub
 langchain
 langchain-huggingface
-litellm
+litellm>=1.40,<1.45
 streamlit
 sentence-transformers
-parlant
+parlant==3.0.0
 pymongo
 plotly
 torch
