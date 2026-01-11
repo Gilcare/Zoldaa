@@ -1,5 +1,6 @@
 import asyncio
 import huggingface_hub
+import imghdr
 import litellm
 import os
 import parlant.sdk as p
