@@ -1,3 +1,4 @@
+import asyncio
 import pandas as pd
 import plotly.express as px
 import torch
@@ -7,6 +8,7 @@ from datetime import datetime, timedelta
 from pymongo import MongoClient
 from threading import Thread
 from transformers import pipeline, TextIteratorStreamer
+from testbot import initialize_parlant, get_response
 
 
 
@@ -17,7 +19,7 @@ db_access = st.secrets.mongo_db_key
 # -------------------------------
 # DATABASE SETUP
 # -------------------------------
-client = MongoClient(db_access)  # <-- keep your connection string
+client = MongoClient(db_access)  
 db = client["Sierra-Nevada"]
 
 signups = db["SignUps"]
