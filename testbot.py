@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 #LITELLM_API_KEY = st.secrets.litellm_api_key
 #LITELLM_PROVIDER_MODEL_NAME="huggingface/deepseek-ai/DeepSeek-R1-0528-Qwen3-8B"
 
-from parlant.agent import Chatbot
+from parlant.core.chatbot import Chatbot
 
 bot = Chatbot(
     embedding_model="sentence-transformers/all-MiniLM-L6-v2"
