@@ -25,13 +25,6 @@ db = client["Sierra-Nevada"]
 signups = db["SignUps"]
 period_symptoms = db["PeriodSymptoms"]
 
-'''
-@st.cache_resource
-def load_pipeline():
-    # Adding torch_dtype="auto" or "float16" speeds up GPU inference
-    return pipeline("text-generation", model="Qwen/Qwen2.5-0.5B-Instruct", dtype=torch.float16)
-pipe = load_pipeline()
-'''
 
 
 
@@ -339,7 +332,7 @@ def landing_page():
          unsafe_allow_html=True
      )
 
-    st.divider()  
+    #st.divider()  
     app = st.sidebar.selectbox("Menu",["📝 Journals","🧭 Metrics", "🧠Insights","✨ Ask Kyma"])
 
     if app == "📝 Journals":
