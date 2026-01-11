@@ -96,7 +96,7 @@ async def create_scheduling_journey(server: p.Server, agent: p.Agent) -> p.Journ
    return journey
 
 # Set Up Parlant Server To Run Agent
-async def initialize_parlant():
+async def initialize_parlant() -> None:
     async with p.Server(nlp_service=p.NLPServices.litellm) as server:
         agent = await server.create_agent(
            name = "Kyma",
