@@ -3,6 +3,7 @@ langchain
 langchain-huggingface
 litellm
 streamlit
+sentence-transformers
 parlant
 pymongo
 plotly
