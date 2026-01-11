@@ -100,19 +100,18 @@ async def create_scheduling_journey(server: p.Server, agent: p.Agent) -> p.Journ
 # Set Up Parlant Server To Run Agent
 async def initialize_parlant() -> None:
     async with p.Server(nlp_service=p.NLPServices.litellm) as server:
-      
-    agent = await server.create_agent(
+        agent = await server.create_agent(
            name = "Kyma",
            description="Is empathetic and calming to the patient."
           )
       
-    # Add domain glossary & scheduling guideline to agent
-    await add_domain_glossary(agent)
-    await create_scheduling_journey(server, agent)
+        # Add domain glossary & scheduling guideline to agent
+        await add_domain_glossary(agent)
+        await create_scheduling_journey(server, agent)
 
-    # Create a session for the user to interact with
-    session = await agent.create_session()
-    return server, session
+        # Create a session for the user to interact with
+        session = await agent.create_session()
+        return server, session
 
 
 async def get_response(session, text):
