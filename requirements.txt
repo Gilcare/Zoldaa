@@ -5,7 +5,7 @@ langchain-huggingface
 litellm
 streamlit
 sentence-transformers
-parlant>=3.1.0
+parlant
 pymongo
 plotly
 torch
