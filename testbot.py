@@ -13,17 +13,6 @@ from dotenv import load_dotenv
 #LITELLM_PROVIDER_MODEL_NAME="huggingface/deepseek-ai/DeepSeek-R1-0528-Qwen3-8B"
 
 
-# Load from Streamlit secrets
-os.environ["LITELLM_PROVIDER_API_KEY"] = st.secrets["huggingface_api_key"]
-
-# Optional but recommended
-os.environ["HUGGINGFACE_API_KEY"] = st.secrets["huggingface_api_key"]
-
-# Model
-os.environ["LITELLM_PROVIDER_MODEL_NAME"] = (
-    "huggingface/deepseek-ai/DeepSeek-R1-0528-Qwen3-8B"
-)
-
 
 
 async def add_domain_glossary(agent: p.Agent) -> None:
