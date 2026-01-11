@@ -16,6 +16,7 @@ from testbot import initialize_parlant, get_response
 db_access = st.secrets.mongo_db_key
 
 LITELLM_API_KEY = st.secrets.litellm_api_key
+HUGGINGFACE_API_KEY = st.secrets.huggingface_api_key
 
 # -------------------------------
 # DATABASE SETUP
