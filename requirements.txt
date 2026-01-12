@@ -1,11 +1,8 @@
-einops
-huggingface_hub
-langchain
-langchain-huggingface
+litellm>=1.61.16
+torch>=2.8.0
 streamlit
 sentence-transformers
 parlant[litellm]
 pymongo
 plotly
-torch
 transformers>=4.35.0
