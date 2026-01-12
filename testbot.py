@@ -1,9 +1,9 @@
 import asyncio
-#import litellm
+import litellm
 import parlant.sdk as p
 import streamlit as st
 from datetime import datetime
-from parlant.adapters.nlp.litellm_service import LiteLLMService
+
 
 
 HUGGINGFACE_API_KEY = st.secrets.huggingface_api_key
@@ -98,11 +98,7 @@ async def create_scheduling_journey(server: p.Server, agent: p.Agent) -> p.Journ
 
 # Set Up Parlant Server To Run Agent
 async def initialize_parlant() -> None:
-    nlp_service_instance = LiteLLMService(
-        model_id=LITELLM_PROVIDER_MODEL_NAME,
-        api_key=LITELLM_API_KEY# Optional: if not set in environment
-    )
-    async with p.Server(nlp_service=nlp_service_instance) as server:
+    async with p.Server(nlp_service=p.NLPServices.litellm) as server:
         agent = await server.create_agent(
            name="Kyma",
            description="Is empathetic and calming to the patient."
