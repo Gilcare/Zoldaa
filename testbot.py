@@ -99,7 +99,7 @@ async def create_scheduling_journey(server: p.Server, agent: p.Agent) -> p.Journ
 # Set Up Parlant Server To Run Agent
 async def initialize_parlant() -> None:
     nlp_service_instance = LiteLLMService(
-        model_name=LITELLM_PROVIDER_MODEL_NAME,
+        model=LITELLM_PROVIDER_MODEL_NAME,
         api_key=LITELLM_API_KEY# Optional: if not set in environment
     )
     async with p.Server(nlp_service=nlp_service_instance) as server:
