@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from pymongo import MongoClient
 from threading import Thread
 #from transformers import pipeline, TextIteratorStreamer
-from testbot import initialize_parlant
+from testbot import initialize_parlant, get_response
 
 
 
@@ -380,44 +380,6 @@ def landing_page():
             response_text = asyncio.run(get_response(st.session_state.parlant_session, prompt))
             st.write(response_text)
             st.session_state.messages.append({"role": "assistant", "content": response_text})
-
-        '''
-        for message in st.session_state.messages:
-            with st.chat_message(message["role"]):
-                st.markdown(message["content"])
-
-
-        # ... (History initialization and display code) ...
-
-        if user_input := st.chat_input("✨ Ask Kyma"):
-            st.session_state.messages.append({"role": "user", "content": user_input})
-            with st.chat_message("user"):
-                st.markdown(user_input)
-
-            with st.chat_message("assistant"):
-                # Setup for streaming
-                streamer = TextIteratorStreamer(pipe.tokenizer, skip_prompt=True, skip_special_tokens=True)
-        
-                # Prepare arguments
-                messages = st.session_state.messages # Use full history for context
-                generation_kwargs = dict(
-                    text_inputs=messages, 
-                    streamer=streamer,
-                    max_new_tokens=512,
-                    do_sample=True,
-                    temperature=0.7,
-                    top_p=0.9
-                )
-
-                # Run generation in a background thread to prevent UI blocking
-                thread = Thread(target=pipe, kwargs=generation_kwargs)
-                thread.start()
-
-                # Display the stream
-                full_response = st.write_stream(streamer)
-
-            st.session_state.messages.append({"role": "assistant", "content": full_response})
-            '''
         
 
 
