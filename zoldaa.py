@@ -389,7 +389,9 @@ def landing_page():
 
             st.session_state.messages.append({"role": "assistant", "content": full_response})
 
-        
+        elif app == "❌ Log Out":
+        st.session_state.logged_in = False
+        st.rerun()        
 
 
 def main():
