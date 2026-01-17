@@ -340,7 +340,7 @@ def landing_page():
      )
 
     st.divider()  
-    app = st.sidebar.selectbox("Menu",["📝 Journals","🧭 Metrics", "🧠Insights","✨ Ask Kyma"])
+    app = st.sidebar.selectbox("Menu",["📝 Journals","🧭 Metrics", "🧠Insights","✨ Ask Kyma", "❌ Log Out"])
 
     if app == "📝 Journals":
         today_tab()
