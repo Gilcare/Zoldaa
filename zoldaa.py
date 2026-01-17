@@ -121,6 +121,32 @@ def severity_label(score):
 # AUTH UI
 # -------------------------------
 def login_signup_page():
+    st.markdown(
+          """
+          <h1 style="
+          color: #007D8C; 
+          text-align: center; 
+          font-family: 'Helvetica Neue', sans-serif; 
+          letter-spacing: 1px;
+          font-weight: 700;
+          margin-bottom: 0px;
+          ">
+           ZOLDAA
+          </h1>
+          <p style="
+          text-align: center; 
+          color: #555555; 
+          font-size: 14px; 
+          margin-top: -10px;
+          margin-bottom: 25px;
+          ">
+          Stand Tall & Thrive ✨
+         </p>
+         """, 
+         unsafe_allow_html=True
+     )
+
+    st.divider()  
     login, signup = st.tabs(["Login", "Sign Up"])
 
     with login:
@@ -391,10 +417,10 @@ def landing_page():
 
     elif app == "🌏 About":
         st.image("group_of_women.png")
-        st.caption ("_❤️AI-Driven Healthcare, Accessible and Affordable for Every lady_")
+        st.caption ("_❤️AI-Driven Healthcare, Accessible and Affordable for Every lady_",text_alignment="center")
         st.write("Every lady deserves access to quality healthcare, no matter where she lives. We're on a mission to make affordable, world-class care available to women & girls across Africa and beyond. It's time to prioritize women's health, globally.")
         st.image("iron_lady.png")
-        st.caption ("_...built with 💜 ZOLDAA_")
+        st.caption ("_...built with 💜 ZOLDAA_",text_alignment = "center")
         st.write("Together, we can make women's health a priority, and ensure that every woman is empowered with the knowledge and resources she needs to thrive")
 
         st.markdown("""
