@@ -397,10 +397,10 @@ def landing_page():
             st.caption ("_...built with 💜 ZOLDAA_")
             st.write("Together, we can make women's health a priority, and ensure that every woman is empowered with the knowledge and resources she needs to thrive")
 
-        st.markdown("""
-        ---
-        🔗 We would love to hear your thoughts (gilcare.com@gmail.com)
-        """)
+            st.markdown("""
+                         ---
+                         📩 We would love to hear your thoughts (gilcare.com@gmail.com)
+                                          """)
         elif app == "❌ Log Out":
             st.session_state.logged_in = False
             st.rerun()        
