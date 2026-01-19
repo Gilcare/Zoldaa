@@ -388,10 +388,15 @@ def landing_page():
 
         # ... (History initialization and display code) ...
 
-        if user_input := st.chat_input("✨ Ask Kyma",accept_file = True,):
+        if prompt := st.chat_input("✨ Ask Kyma",accept_file = True,):
+            user_input = prompt.text
             st.session_state.messages.append({"role": "user", "content": user_input})
             with st.chat_message("user"):
                 st.markdown(user_input)
+                # Optional: Handle uploaded files if any
+                if prompt.files:
+                    st.caption(f"📎 {len(prompt.files)} file(s) uploaded")
+
 
             with st.chat_message("assistant",avatar = "👱🏽‍♀️"):
                 # Setup for streaming
