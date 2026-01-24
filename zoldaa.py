@@ -350,7 +350,7 @@ def today_tab():
         elif symptom == "Food cravings":
             food_cravings()
         elif symptom == "Cramps":
-            cramps()
+            scores[symptom] = cramps()
         elif symptom == "Heavy bleeding":
             heavy_bleeding()
         elif symptom == "Mood swings":
