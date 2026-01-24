@@ -193,9 +193,11 @@ def energy_levels(score):
 def fatigue():
     fatigue_emoji_placeholder = st.empty()
     st.markdown("Your Energy Levels At The Moment?",text_alignment="center")
-    energy = st.select_slider(label="Energy",
+    energy_val = st.select_slider(label="Energy",
                               options=[1,2,3,4,5,6,7,8,9,10],
-                              value= 10)
+                              value= 1,
+                              key = "energy_slider")
+    return energy_val
     
     # Update the placeholder at the top of the page with the current selection
     fatigue_emoji_placeholder.markdown(f"## {energy}", text_alignment="center")
@@ -221,21 +223,24 @@ def mood():
 def migraine():
     st.markdown('<p style = "text-align: center; font-size: 30px;">🤦🏾‍♀️</p>',unsafe_allow_html=True)
     st.markdown("Head Pain Level Right Now?", text_alignment="center")
-    migraine = st.select_slider(
+    # Return value of this widget
+    migraine_val = st.select_slider(
         label="Migraine",
         options=[1,2,3,4,5,6,7,8,9,10],
-        value=10
+        value=1,
+        key = "migraine_slider"
     )
+    return migraine_val
 
 
 def cramps():
     st.markdown('<p style = "text-align: center; font-size: 30px;">⚡</p>',unsafe_allow_html=True)
-    st.markdown("How's the cramping?", text_alignment="center")
+    st.markdown("How's the cramping?", text_alignment="center", help="1 is very mild, 10 is unbearable")
     # Return value of this widget
     cramps_val = st.select_slider(
         label="Cramps",
         options=[1,2,3,4,5,6,7,8,9,10],
-        value=10,
+        value=1,
         key = "cramps_slider"
     )
     return cramps_val
@@ -244,53 +249,63 @@ def cramps():
 def bloating():
     st.markdown('<p style = "text-align: center; font-size: 30px;">🤢</p>',unsafe_allow_html=True)
     st.markdown("How's the bloating right now?", text_alignment="center")
-    bloating = st.select_slider(
+    # Return value of this widget
+    bloating_val = st.select_slider(
         label="Bloated",
         options=[1,2,3,4,5,6,7,8,9,10],
-        value=10
+        value=1,
+        key = "bloat_slider"
     )
-
+    return bloating_val
 
 def sleep():
     st.markdown('<p style = "text-align: center; font-size: 30px;">💤</p>',unsafe_allow_html=True)
     st.markdown("How was your rest last night?", text_alignment="center")
-    sleep = st.select_slider(
+    # Return value of this widget
+    sleep_val = st.select_slider(
         label="Sleep",
         options=[1,2,3,4,5,6,7,8,9,10],
-        value=10
+        value=1,
+        key = "sleep_slider"
     )
-
+    return sleep_val
 
 def food_cravings():
     st.markdown('<p style = "text-align: center; font-size: 30px;">🍔</p>',unsafe_allow_html=True)
     st.markdown("Rate your major snack cravings at the moment", text_alignment="center")
-    food_cravings = st.select_slider(
+    # Return value of this widget
+    food_cravings_val = st.select_slider(
         label="Food Cravings",
         options=[1,2,3,4,5,6,7,8,9,10],
-        value=10
+        value=1,
+        key = "food_cravings_slider"
     )
-
+    return food_cravings_val
 
 def back_pain():
     st.markdown('<p style = "text-align: center; font-size: 30px;">🙇🏼‍♀️</p>',unsafe_allow_html=True)
     st.markdown("Back pain level at the moment?", text_alignment="center")
-    back_pain = st.select_slider(
+    # Return value of this widget
+    back_pain_val = st.select_slider(
         label="Back pain",
         options=[1,2,3,4,5,6,7,8,9,10],
-        value=10
+        value=1,
+        key = "backpain_val"
     )
-
+    return back_pain_val
 
 def heavy_bleeding():
     with st.container():
         st.markdown('<p style = "text-align: center; font-size: 30px;">🩸</p>',unsafe_allow_html=True)
-        st.markdown("How heavy is your bleeding now?", text_alignment="center")
-        heavy_bleeding = st.select_slider(
+        st.markdown("How heavy is your bleeding now?", text_alignment="center",help="1 is light, 10 is very heavy")
+        # Return value of this widget
+        heavy_bleeding_val = st.select_slider(
                label="Bleeds",
                options=[1,2,3,4,5,6,7,8,9,10],
-               value=10
+               value=1,
+               key = "bleed_slider"
             )
-
+        return heavy_bleeding_val
 
 # -------------------------------
 # SYMPTOM SETUP
@@ -340,23 +355,23 @@ def today_tab():
     scores = {}
     for symptom in symptoms:
         if symptom == "Fatigue":
-            fatigue()
+            scores[symptom] = fatigue()
         elif symptom == "Bloating":
-            bloating()
+            scores[symptom] = bloating()
         elif symptom == "Sleep problems":
-            sleep()
+            scores[symptom] = sleep()
         elif symptom == "Back pain":
-            back_pain()
+            scores[symptom] = back_pain()
         elif symptom == "Food cravings":
-            food_cravings()
+            scores[symptom] = food_cravings()
         elif symptom == "Cramps":
             scores[symptom] = cramps()
         elif symptom == "Heavy bleeding":
-            heavy_bleeding()
+            scores[symptom] = heavy_bleeding()
         elif symptom == "Mood swings":
-            mood()
+            scores[symptom] = mood()
         elif symptom == "Migraines":
-            migraine()
+            scores[symptom] = migraine()
         else:
             score = st.slider(symptom, 0, 10, 0)
             scores[symptom] = score
